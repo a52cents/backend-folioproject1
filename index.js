@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/cars", (req, res) => {
-  const q = "SELECT * FROM new_schema.car";
+  const q = "SELECT * FROM bobqn97loadpnxx0h2yw.car";
   
 
   db.query(q, (err, data) => {
@@ -36,7 +36,7 @@ app.get("/cars", (req, res) => {
 });
 
  app.post("/cars", upload.single('cover'),(req, res) => {
-   const q = "INSERT INTO new_schema.car (`title`, `description`, `cover`, `price`) VALUES (?)";
+   const q = "INSERT INTO bobqn97loadpnxx0h2yw.car (`title`, `description`, `cover`, `price`) VALUES (?)";
    const values = [
     req.body.title,
     req.body.description,
@@ -56,7 +56,7 @@ app.get("/cars", (req, res) => {
 
  app.delete("/cars/:id", (req, res) => {
    const carId = req.params.id;
-   const q = "DELETE FROM new_schema.car WHERE idcar = ?";
+   const q = "DELETE FROM bobqn97loadpnxx0h2yw.car WHERE idcar = ?";
 
    db.query(q, carId, (err, data) => {
      if (err) {
