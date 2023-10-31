@@ -10,7 +10,7 @@ const db = mysql.createConnection({
 
     host: "bobqn97loadpnxx0h2yw-mysql.services.clever-cloud.com", //localhost
     user: "uaeoubfztn9pjdip", //root
-    password: "uaeoubfztn9pjdip",
+    password: "chaeOuBlBa8hQx5Udhpo",
     database: "bobqn97loadpnxx0h2yw"
   });
 
