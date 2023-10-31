@@ -8,10 +8,10 @@ const upload = multer({storage: multer.memoryStorage()});
 // Utilisez une fonction pour créer une nouvelle connexion à chaque requête
 const db = mysql.createConnection({
 
-    host: "localhost",
-    user: "root",
-    password: "Jsuistrophlou18",
-    database: "new_schema"
+    host: "bobqn97loadpnxx0h2yw-mysql.services.clever-cloud.com", //localhost
+    user: "uaeoubfztn9pjdip", //root
+    password: "uaeoubfztn9pjdip",
+    database: "bobqn97loadpnxx0h2yw"
   });
 
   app.use(express.json())
