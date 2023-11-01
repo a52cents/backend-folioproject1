@@ -5,6 +5,8 @@ const app = express();
 import multer from "multer";
 
 const upload = multer({storage: multer.memoryStorage()});
+
+app.use(express.static('dist'));
 // Utilisez une fonction pour créer une nouvelle connexion à chaque requête
 const db = mysql.createConnection({
 
@@ -68,7 +70,7 @@ app.get("/cars", (req, res) => {
  })
  app.put("/cars/:id", (req, res) => {
   const carId = req.params.id;
-  const q = "UPDATE car SET `title` = ?, `description` = ?, `cover` = ?, `price` = ? WHERE idcar = ?";
+  const q = "UPDATE bobqn97loadpnxx0h2yw.car SET `title` = ?, `description` = ?, `cover` = ?, `price` = ? WHERE idcar = ?";
   const values = [
     req.body.title,
     req.body.description,
