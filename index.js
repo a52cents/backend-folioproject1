@@ -78,7 +78,7 @@ app.get("/cars", (req, res) => {
     req.body.price
     
    ];
-  db.query(q, [values, carId], (err, data) => {
+  db.query(q, [...values, carId], (err, data) => {
     if (err) {
       return res.json(err);
     } else {
