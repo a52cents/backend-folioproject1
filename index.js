@@ -118,6 +118,7 @@ app.get("/cars", (req, res) => {
   db.query(q, [...values, carId], (err, data) => {
     if (err) {
       return res.json(err);
+      return res.json(values);
     } else {
       return res.json("Car deleted successfully");
     }
