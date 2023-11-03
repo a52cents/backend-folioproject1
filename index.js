@@ -1,12 +1,16 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors"
+import fileUpload from "express-fileupload";
 const app = express();
 import multer from "multer";
+import path from "path";
 
-const upload = multer({storage: multer.memoryStorage()});
+app.use(fileUpload());
+import fs from 'fs';
 
 app.use(express.static('dist'));
+app.use('/upload', express.static('upload'));
 // Utilisez une fonction pour créer une nouvelle connexion à chaque requête
 const db = mysql.createConnection({
 
@@ -18,7 +22,7 @@ const db = mysql.createConnection({
 
   app.use(express.json())
   app.use(cors())
-
+  
 app.get("/", (req, res) => {
   res.json("Hello this is the backend !");
 });
@@ -37,17 +41,28 @@ app.get("/cars", (req, res) => {
   });
 });
 
- app.post("/cars", upload.single('cover'),(req, res) => {
+  
+
+ app.post("/cars", (req, res) => {
+   
+   let uploadPath;
    const q = "INSERT INTO bobqn97loadpnxx0h2yw.car (`title`, `description`, `cover`, `price`) VALUES (?)";
    const values = [
     req.body.title,
     req.body.description,
-    req.file,
+    req.files.cover.name,
     req.body.price
     
    ];
-   console.log(req.file);
+   uploadPath = "./upload/" + req.files.cover.name;
+   req.files.cover.mv(uploadPath,function(err){
+     if(err){
+       console.log(err);
+     }
+   });
+
    db.query(q, [values], (err, data) => {
+
     if (err) {
         res.json(err);
       } else {
@@ -56,25 +71,47 @@ app.get("/cars", (req, res) => {
    })
  })
 
- app.delete("/cars/:id", (req, res) => {
-   const carId = req.params.id;
-   const q = "DELETE FROM bobqn97loadpnxx0h2yw.car WHERE idcar = ?";
+ app.delete("/cars/:id", async (req, res) => {
+  const carId = req.params.id;
 
-   db.query(q, carId, (err, data) => {
-     if (err) {
-       return res.json(err);
-     } else {
-       return res.json("Car deleted successfully");
-     }
-   })
- })
+  // Récupérer le nom du fichier cover avant de supprimer la voiture
+  const getCoverQuery = "SELECT cover FROM bobqn97loadpnxx0h2yw.car WHERE idcar = ?";
+  db.query(getCoverQuery, carId, async (err, rows) => {
+      if (err) {
+          return res.json(err);
+      }
+
+      const coverFileName = rows[0].cover;
+
+      const deleteCarQuery = "DELETE FROM bobqn97loadpnxx0h2yw.car WHERE idcar = ?";
+      db.query(deleteCarQuery, carId, (deleteErr, deleteResult) => {
+          if (deleteErr) {
+              return res.json(deleteErr);
+          }
+
+          // Supprimer le fichier cover associé
+          
+          const filePath ="./upload/" + coverFileName;
+          
+
+          fs.unlink(filePath, (unlinkErr) => {
+              if (unlinkErr) {
+                  return res.json(unlinkErr);
+              }
+
+              return res.json("Car and image deleted successfully");
+          });
+      });
+  });
+});
+
  app.put("/cars/:id", (req, res) => {
   const carId = req.params.id;
   const q = "UPDATE bobqn97loadpnxx0h2yw.car SET `title` = ?, `description` = ?, `cover` = ?, `price` = ? WHERE idcar = ?";
   const values = [
     req.body.title,
     req.body.description,
-    req.body.cover,
+    req.files.cover.name,
     req.body.price
     
    ];
