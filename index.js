@@ -50,7 +50,7 @@ app.get("/cars", (req, res) => {
    const values = [
     req.body.title,
     req.body.description,
-    req.files.cover.name,
+    req.files.cover,
     req.body.price
     
    ];
@@ -60,7 +60,6 @@ app.get("/cars", (req, res) => {
        console.log(err);
      }
    });
-
    db.query(q, [values], (err, data) => {
 
     if (err) {
@@ -69,6 +68,7 @@ app.get("/cars", (req, res) => {
         res.json("Car created successfully !");
       }
    })
+
  })
 
  app.delete("/cars/:id", async (req, res) => {
