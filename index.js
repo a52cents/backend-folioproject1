@@ -41,7 +41,7 @@ app.get("/cars", (req, res) => {
 });
 
 app.post("/cars", (req, res) => {
-  let uploadPath;
+  //let uploadPath;
 
   // Utilisez imagekit.upload pour envoyer l'image à ImageKit
   imagekit.upload(
@@ -94,13 +94,11 @@ app.post("/cars", (req, res) => {
 
           // Supprimer le fichier cover associé
           
-          const filePath ="./upload/" + coverFileName;
-          
-
-          fs.unlink(filePath, (unlinkErr) => {
-              if (unlinkErr) {
-                  return res.json(unlinkErr);
-              }
+          //const filePath ="./upload/" + coverFileName;
+          //fs.unlink(filePath, (unlinkErr) => {
+          //    if (unlinkErr) {
+          //        return res.json(unlinkErr);
+          //    }
 
               return res.json("Car and image deleted successfully");
           });
