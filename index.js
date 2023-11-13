@@ -84,7 +84,7 @@ app.post("/cars", (req, res) => {
           return res.json(err);
       }
 
-      const coverFileName = rows[0].cover;
+      //const coverFileName = rows[0].cover;
 
       const deleteCarQuery = "DELETE FROM bobqn97loadpnxx0h2yw.car WHERE idcar = ?";
       db.query(deleteCarQuery, carId, (deleteErr, deleteResult) => {
@@ -92,16 +92,17 @@ app.post("/cars", (req, res) => {
               return res.json(deleteErr);
           }
 
-          // Supprimer le fichier cover associé
+          
           
           //const filePath ="./upload/" + coverFileName;
-          //fs.unlink(filePath, (unlinkErr) => {
+         // fs.unlink(filePath, (unlinkErr) => {
           //    if (unlinkErr) {
-          //        return res.json(unlinkErr);
-          //    }
+           //       return res.json(unlinkErr);
+             // }
 
-              return res.json("Car and image deleted successfully");
-          });
+              //return res.json("Car and image deleted successfully");
+          //});
+          return res.json("Car and image deleted successfully");
       });
   });
 });
